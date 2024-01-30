@@ -7,3 +7,4 @@ class paddle:
     y = 0
 
 print(paddle.x)
+print(paddle.y)
