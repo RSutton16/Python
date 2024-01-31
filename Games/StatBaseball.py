@@ -1,10 +1,12 @@
-balls = 0
-strikes = 0
-outs = 0
-innings = 1
+balls = strikes = outs = innings = playerRuns = aiRuns = 0
 first = second = third = False
-playerRuns = 0
-aiRuns = 0
+
+
+def newGame():
+    global balls, strikes, outs, innings, first, second, third, playerRuns, aiRuns, inning
+    balls = strikes = outs = playerRuns = aiRuns = 0
+    inning = 0
+
 
 def printStats():
     global balls, strikes, outs, innings, first, second, third, playerRuns, aiRuns
@@ -13,16 +15,21 @@ def printStats():
     print("Player Score: " + str(playerRuns) + " | Ai Score: " + str(aiRuns))
     print("First: " + str(first) + " | Second: " + str(second) + " | Third: " + str(third) + "\n")
 
+
 def resetCount():
     global balls, strikes
     balls = 0
     strikes = 0
 
+
 def inning():
     global innings, outs
-    if innings < 9:
+    if innings >= 9 and aiRuns != playerRuns:
+        newGame()
+    else:
         innings += 1
         outs = 0
+
 
 def out():
     global outs
@@ -30,14 +37,22 @@ def out():
         outs = 0
         inning()
     else:
-        outs+=1
+        outs += 1
     resetCount()
+
 
 def moveRunner(amount):
     global first, second, third, playerRuns, aiRuns
+    '''
+    0 = walk
+    1 = single
+    2 = double 
+    3 = triple
+    4 = homerun
+    '''
     if amount == 0:
         if first and second and third:
-            aiRuns +=1
+            aiRuns += 1
         elif first and second:
             third = True
         elif first:
@@ -45,7 +60,7 @@ def moveRunner(amount):
         first = True
     if amount == 1:
         if third:
-            aiRuns +=1
+            aiRuns += 1
             third = False
         if second:
             aiRuns += 1
@@ -90,7 +105,6 @@ def moveRunner(amount):
         first = False
         second = False
         third = False
-        
 
 
 def changeCount(result):
@@ -112,33 +126,38 @@ def changeCount(result):
         if strikes < 2:
             strikes += 1
 
-input2 = ''
-while input2 != 'q':
-    input2 = input("What would you like to do ?")
-    if input2 == 's':
-        changeCount('strike')
-    if input2 == 'b':
-        changeCount('ball')
-    if input2 == 'o':
-        changeCount('flyout')
-    if input2 == 'o':
-        changeCount('groundout')
-    if input2 == 'f':
-        changeCount('foulball')
 
-    if input2 == '0':
-        moveRunner(0)
-    if input2 == '1':
-        moveRunner(1)
-    if input2 == '2':
-        moveRunner(2)
-    if input2 == '3':
-        moveRunner(3)
-    if input2 == '4':
-        moveRunner(4)
+'''
+game test loop is just to test mechanics of the game
+q = quit
+s = throw a strike
+b = throw a ball
+o = make an out
+f = hitter hits a foul ball
+0 = walk
+1 = single
+2 = double
+3 = triple
+4 = homerun
+'''
 
 
+def gameTestLoop():
+    testInput = ''
+    while testInput != 'q':
+        testInput = input("What would you like to do ?")
+        if testInput == 's':
+            changeCount('strike')
+        if testInput == 'b':
+            changeCount('ball')
+        if testInput == 'o':
+            changeCount('flyout')
+        if testInput == 'o':
+            changeCount('groundout')
+        if testInput == 'f':
+            changeCount('foulball')
+        moveRunner(int(testInput))
+        printStats()
 
-    printStats()
 
-
+gameTestLoop()
