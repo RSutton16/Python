@@ -20,7 +20,7 @@ def resetCount():
 
 def inning():
     global innings, outs
-    if innings < 8:
+    if innings < 9:
         innings += 1
         outs = 0
 
@@ -44,45 +44,49 @@ def moveRunner(amount):
             second = True
         first = True
     if amount == 1:
-        if first and second and third:
-            aiRuns +=2
-            second = False
-        elif first and second:
+        if third:
             aiRuns +=1
+            third = False
+        if second:
+            aiRuns += 1
+            second = False
+        if first:
             third = True
-        elif first:
-            third = True
+
         first = True
     if amount == 2:
-        if first and second and third:
-            aiRuns +=2
-        elif first and second:
-            aiRuns +=1
+        if third:
+            aiRuns += 1
+            third = False
+        if second:
+            aiRuns += 1
+            second = False
+        if first:
             third = True
-        elif first:
-            third = True
-        first = False
+            first = False
+
         second = True
     if amount == 3:
-        if first and second and third:
-            aiRuns +=3
-        elif first and second:
-            aiRuns +=2
-        elif first:            
-            aiRuns +=1
+        if third:
+            aiRuns += 1
+            third = False
+        if second:
+            aiRuns += 1
+            second = False
+        if first:
+            aiRuns += 1
+            first = False
 
-        first = False
-        second = False
         third = True
-    if amount == 3:
-        if first and second and third:
-            aiRuns +=4
-        elif first and second:
-            aiRuns +=3
-        elif first:            
-            aiRuns +=2
-        else:
-            aiRuns +=1
+    if amount == 4:
+        if first:
+            aiRuns += 1
+        if second:
+            aiRuns += 1
+        if third:
+            aiRuns += 1
+        aiRuns += 1
+
         first = False
         second = False
         third = False
@@ -102,10 +106,39 @@ def changeCount(result):
             moveRunner(0)
     if result == "flyout":
         out()
+    if result == "groundout":
+        out()
     if result == "foulball":
-        if strike < 2:
-            strike += 1
+        if strikes < 2:
+            strikes += 1
+
+input2 = ''
+while input2 != 'q':
+    input2 = input("What would you like to do ?")
+    if input2 == 's':
+        changeCount('strike')
+    if input2 == 'b':
+        changeCount('ball')
+    if input2 == 'o':
+        changeCount('flyout')
+    if input2 == 'o':
+        changeCount('groundout')
+    if input2 == 'f':
+        changeCount('foulball')
+
+    if input2 == '0':
+        moveRunner(0)
+    if input2 == '1':
+        moveRunner(1)
+    if input2 == '2':
+        moveRunner(2)
+    if input2 == '3':
+        moveRunner(3)
+    if input2 == '4':
+        moveRunner(4)
 
 
 
-printStats()
+    printStats()
+
+

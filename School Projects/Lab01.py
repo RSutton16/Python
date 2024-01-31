@@ -14,7 +14,7 @@ def mins(miles):
             hours += 1
             minutes -= 60
 
-    print("To run " + str(miles) + " miles it would take you Hours: " + str(hours) + " Mins: " + str(minutes))
+    print("To run " + str(miles) + " miles it would take you Hours: " + str(hours) + " Mins: " + str(int(minutes)))
 
 
 mins(mile5)
