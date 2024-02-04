@@ -1,10 +1,14 @@
+import pygame
+
+pygame.init()
+
+
+
 class ball:
-    x = 0
-    y = 0
 
 class paddle:
     x = 0
     y = 0
+    upKey = "w"
+    downKey ="s"
 
-print(paddle.x)
-print(paddle.y)
